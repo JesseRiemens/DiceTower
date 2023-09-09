@@ -32,3 +32,5 @@ fp-info-cache
 *.svg.bkp
 *#auto_saved_files#
 ~*.kicad_sch.lck
+*.$*.drawio.png.bkp
+*.$*.drawio.png.dtmp
