@@ -10,8 +10,8 @@ View this project on [CADLAB.io](https://cadlab.io/project/27312).
 
 | Item                                   | Quantity | Price (Estimated) | Link                                  |
 | -------------------------------------- | -------- | ----------------- | ------------------------------------- |
-| ESP32 DevKitC                          | 1        | $7.95             |
-| LCD 20x4                               | 1        | $9.99             | [BitsAndParts-LCD]; [OpenCircuit-LCD] |
+| ESP32 Feather Huzzah32                 | 1        | $20.22            | [DigiKey-ESP32]                       |
+| LCD 20x4                               | 1        | $20.26            | [DigiKey-LCD]                         |
 | PCB                                    | 1        | $5.00             | [PCBWay]; [JLCPCB]                    |
 | 3D-Printed Parts                       | 1        | $10.00            |
 | Incremental Encoder                    | 1        | $1.00             | [TinyTronics-Encoder]                 |
@@ -22,10 +22,10 @@ View this project on [CADLAB.io](https://cadlab.io/project/27312).
 | Boost Converter                        | 1        | $2.00             | [TinyTronics-Boost-Converter]         |
 | Battery                                | 1        | $5.00             | [TinyTronics-Battery]                 |
 
+[DigiKey-ESP32]: https://www.digikey.nl/en/products/detail/adafruit-industries-llc/3619/8119806
+[DigiKey-LCD]: https://www.digikey.nl/en/products/detail/newhaven-display-intl/NHD-0420AZ-FSW-GBW-33V3/2773596
 [PCBWay]: https://www.pcbway.com
 [JLCPCB]: https://jlcpcb.com
-[BitsAndParts-LCD]: https://www.bitsandparts.nl/Display-LCD-HD44780-20x4-wit-op-blauw-p1067343
-[OpenCircuit-LCD]: https://opencircuit.nl/product/20x4-karakters-lcd-module-blauw
 [TinyTronics-Encoder]: https://www.tinytronics.nl/shop/nl/schakelaars/manuele-schakelaars/rotary-encoders/rotary-encoder-module
 [TinyTronics-Encoder-Knob]: https://www.tinytronics.nl/shop/nl/componenten/knoppen,-doppen-en-kapjes/potmeter-knop-zwart
 [TinyTronics-Boost-Converter]: https://www.tinytronics.nl/shop/en/power/voltage-converters/boost-(step-up)-converters/mini-dc-dc-3.3v-step-up-boost-converter-400ma

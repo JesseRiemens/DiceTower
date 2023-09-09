@@ -30,3 +30,5 @@ fp-info-cache
 
 # Draw io files
 *.svg.bkp
+*#auto_saved_files#
+~*.kicad_sch.lck
