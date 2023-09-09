@@ -11,7 +11,6 @@ View this project on [CADLAB.io](https://cadlab.io/project/27312).
 | Item                                   | Quantity | Price (Estimated) | Link                                  |
 | -------------------------------------- | -------- | ----------------- | ------------------------------------- |
 | ESP32 DevKitC                          | 1        | $7.95             |
-| Powerbank                              | 1        | $9.99             |
 | LCD 20x4                               | 1        | $9.99             | [BitsAndParts-LCD]; [OpenCircuit-LCD] |
 | PCB                                    | 1        | $5.00             | [PCBWay]; [JLCPCB]                    |
 | 3D-Printed Parts                       | 1        | $10.00            |
@@ -20,6 +19,8 @@ View this project on [CADLAB.io](https://cadlab.io/project/27312).
 | Dice (d4, d6, d8, d10, d12, d20, d100) | 1        | $10.00            |
 | Switches                               | 7        | $9.99             |
 | Dice keycaps printed                   | 7        | $1.00             |
+| Boost Converter                        | 1        | $2.00             | [TinyTronics-Boost-Converter]         |
+| Battery                                | 1        | $5.00             | [TinyTronics-Battery]                 |
 
 [PCBWay]: https://www.pcbway.com
 [JLCPCB]: https://jlcpcb.com
@@ -27,3 +28,5 @@ View this project on [CADLAB.io](https://cadlab.io/project/27312).
 [OpenCircuit-LCD]: https://opencircuit.nl/product/20x4-karakters-lcd-module-blauw
 [TinyTronics-Encoder]: https://www.tinytronics.nl/shop/nl/schakelaars/manuele-schakelaars/rotary-encoders/rotary-encoder-module
 [TinyTronics-Encoder-Knob]: https://www.tinytronics.nl/shop/nl/componenten/knoppen,-doppen-en-kapjes/potmeter-knop-zwart
+[TinyTronics-Boost-Converter]: https://www.tinytronics.nl/shop/en/power/voltage-converters/boost-(step-up)-converters/mini-dc-dc-3.3v-step-up-boost-converter-400ma
+[TinyTronics-Battery]: https://www.tinytronics.nl/shop/en/power/batteries/li-po/li-po-battery-3.7v-1250mah-jst-ph-lp554050
