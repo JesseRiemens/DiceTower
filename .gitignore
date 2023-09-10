@@ -34,3 +34,4 @@ fp-info-cache
 ~*.kicad_sch.lck
 *.$*.drawio.png.bkp
 *.$*.drawio.png.dtmp
+*~_autosave-*.kicad_pcb.lck
