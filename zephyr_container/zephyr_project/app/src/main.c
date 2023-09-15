@@ -9,7 +9,6 @@
 #include <app_version.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
-#include <zephyr/drivers/led_strip.h>
 #include <zephyr/drivers/spi.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/util.h>
@@ -19,4 +18,11 @@ LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
 int main(void) {
   printk("Zephyr Example Application %s\n", APP_VERSION_STRING);
+
+  while(1) 
+  {
+    k_msleep(1000);
+    printk("Hello World!\n");
+  }
+  
 }
