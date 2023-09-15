@@ -81,7 +81,7 @@
                 "build",
                 "${PROJECT_DIR}/app/",
                 "--build-dir",
-                "${PROJECT_DIR}/build-docker/",
+                "${PROJECT_DIR}/build/",
                 "--pristine"
             ],
             "problemMatcher": [
@@ -106,7 +106,7 @@
                 "-b",
                 "${input:boardType}",
                 "--build-dir",
-                "${PROJECT_DIR}/build-docker/",
+                "${PROJECT_DIR}/build/",
                 "${PROJECT_DIR}/app/",
                 "--pristine"
             ],
