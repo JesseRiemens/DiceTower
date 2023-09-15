@@ -336,6 +336,10 @@
                 "115200",
                 "/dev/ttyUSB0"
             ],
+            "dependsOn": [
+                "West Rebuild",
+                "Flash Application (default)"
+            ],
         }
     ],
     "inputs": [
