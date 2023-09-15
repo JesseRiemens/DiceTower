@@ -1,0 +1,344 @@
+{
+    "version": "2.0.0",
+    "linux": {
+        "options": {
+            "shell": {
+                "executable": "docker",
+                "args": [
+                    "run",
+                    "--rm",
+                    "-v",
+                    "${env:HOME}/.ssh:/home/user/.ssh",
+                    "-v",
+                    "${workspaceFolder}/..:/workdir",
+                    "--env",
+                    "ZEPHYR_BASE=/workdir/zephyr",
+                    "--env",
+                    "PROJECT_DIR=/workdir/zephyr_project",
+                    "registry.gitlab.com/Jesse-technology/docker-containers/zephyr:latest",
+                    "/bin/bash",
+                    "-c",
+                ],
+            },
+            "cwd": "${workspaceFolder}",
+            "env": {}
+        },
+    },
+    "tasks": [
+        {
+            "label": "Initialize Workspace",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "./zephyr_project/.vscode/init_workspace.sh",
+            "args": [
+                "${workspaceFolder}"
+            ],
+        },
+        {
+            "label": "Set Default Board",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "config",
+                "build.board",
+                "${input:boardType}",
+            ],
+        },
+        {
+            "label": "Pristine Build (Default)",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "build",
+                "${PROJECT_DIR}/app/",
+                "--build-dir",
+                "${PROJECT_DIR}/build-docker/",
+                "--pristine"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Pristine Build (with board selection)",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "build",
+                "-b",
+                "${input:boardType}",
+                "--build-dir",
+                "${PROJECT_DIR}/build-docker/",
+                "${PROJECT_DIR}/app/",
+                "--pristine"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "West Rebuild",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "build",
+                "${PROJECT_DIR}/app/",
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "List Unit-Tests (Twister(Workspace)",
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isDefault": false
+            },
+            "command": "west",
+            "args": [
+                "twister",
+                "--list-tests",
+                "-T",
+                "app/",
+                "--outdir",
+                "build/twister",
+                "--clobber-output",
+                "--report-dir",
+                "twister",
+                "-v"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Unit-Tests (Twister(Workspace)",
+            "type": "shell",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": "west",
+            "args": [
+                "twister",
+                "-T",
+                "app/",
+                "--outdir",
+                "build/twister",
+                "--clobber-output",
+                "--report-dir",
+                "twister/",
+                "-v",
+                "-i"
+            ],
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": "^\\s-\\s(FAIL)\\s-\\s\\[(.*)\\]\\sduration\\s=\\s(.*)\\sseconds$",
+                            "file": 2,
+                            "message": 0,
+                            "location": 0,
+                            "severity": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Flash Application (Custom Runner)",
+            "detail": "Needs local dependencies to be installed",
+            "type": "process",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "flash",
+                "--runner",
+                "${input:flashRunnerType}"
+            ],
+            "dependsOn": [
+                "West Rebuild"
+            ],
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "bash",
+                    "args": [
+                        "--init-file",
+                        "${workspaceFolder}/.vscode/source_script.sh",
+                        "-c"
+                    ]
+                }
+            }
+        },
+        {
+            "label": "Flash Application (default)",
+            "detail": "Needs local dependencies to be installed",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "flash",
+                "--skip-rebuild",
+                "--build-dir",
+                "${workspaceFolder}/build-docker/"
+            ],
+            "dependsOn": [
+                "West Rebuild"
+            ],
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "bash",
+                    "args": [
+                        "--init-file",
+                        "${workspaceFolder}/.vscode/source_script.sh",
+                        "-c"
+                    ]
+                }
+            }
+        },
+        {
+            "label": "Run Application (from build dir)",
+            "detail": "Needs local dependencies to be installed",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "west",
+            "args": [
+                "build",
+                "-t",
+                "run",
+                "${workspaceFolder}/app/",
+                "--build-dir",
+                "${workspaceFolder}/build/"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "shell": {
+                    "executable": "bash",
+                    "args": [
+                        "--init-file",
+                        "${workspaceFolder}/.vscode/source_script.sh",
+                        "-c"
+                    ]
+                }
+            }
+        },
+        {
+            "label": "Clang-format",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "clang-format",
+            "args": [
+                "-i",
+                "${relativeFile}",
+                "--style=file:./zephyr/.clang-format",
+            ],
+        },
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "boardType",
+            "description": "Select a board",
+            "options": [
+                "custom_plank",
+                "native_posix",
+                "native_posix_64",
+                "qemu_x86",
+                "qemu_x86_64",
+                "nrf9160dk_nrf9160",
+                "nrf9160dk_nrf9160_ns",
+                "esp32",
+                "esp_wrover_kit",
+                "esp_wroom_32",
+            ]
+        },
+        {
+            "type": "pickString",
+            "id": "flashRunnerType",
+            "description": "Select a runner",
+            "options": [
+                "jlink",
+                "nrfjprog"
+            ]
+        }
+    ]
+}

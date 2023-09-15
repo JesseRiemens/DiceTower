@@ -1,0 +1,22 @@
+# This file is provided so that the application can be compiled using Twister,
+# the Zephyr testing tool. In this file, multiple combinations can be specified,
+# so that you can easily test all of them locally or in CI.
+sample:
+  description: Example application
+  name: example-application 
+common:
+  build_only: true
+  integration_platforms:
+    - esp32
+tests:
+  app.default: {}
+  app.debug:
+    extra_overlay_confs:
+      - debug.conf
+  sample.drivers.led.ws2812:
+    tags: LED
+    filter: dt_compat_enabled("worldsemi,ws2812-gpio")
+    harness_config:
+      fixture: fixture_led_ws2812
+    integration_platforms:
+      - esp32

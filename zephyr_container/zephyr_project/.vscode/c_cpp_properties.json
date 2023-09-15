@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../zephyr/**",
+                "${workspaceFolder}/../zephyr/include",
+                "${workspaceFolder}/..//zephyr/soc/arm/nordic_nrf/nrf91",
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/build/zephyr/include/generated"
+            ],
+            "forcedInclude": [
+                "${workspaceFolder}/build/zephyr/include/generated/autoconf.h"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-arm",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}

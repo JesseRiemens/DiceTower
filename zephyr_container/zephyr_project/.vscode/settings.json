@@ -1,0 +1,37 @@
+{
+    "cmake.configureOnOpen": false,
+    "git.ignoreLimitWarning": true,
+    "files.associations": {
+        "zbus.h": "c",
+        "kernel.h": "c",
+        "messages.h": "c",
+        "mcp3425.h": "c",
+        "i2c.h": "c",
+        "adc.h": "c",
+        "adc_context.h": "c"
+    },
+    "editor.formatOnSave": true,
+    "clang-format.executable": "/usr/bin/clang-format-15",
+    "clang-format.style": "LLVM",
+    "clang-format.language.c.enable": true,
+    "[c]": {
+        "editor.defaultFormatter": "xaver.clang-format",
+        "editor.wordBasedSuggestions": false,
+        "editor.suggest.insertMode": "replace",
+        "editor.semanticHighlighting.enabled": true,
+    },
+    "C_Cpp.clang_format_path": "/usr/bin/clang-format-15",
+    "C_Cpp.clang_format_style": "file",
+    "terminal.integrated.profiles.linux": {
+        "zephyr": {
+            "path": "bash",
+            "icon": "terminal-bash",
+            "args": [
+                "--init-file",
+                "${workspaceFolder}/.vscode/source_script.sh",
+                "-i"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "zephyr"
+}
