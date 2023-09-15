@@ -2,26 +2,29 @@
     "version": "2.0.0",
     "linux": {
         "options": {
-            "shell": {
-                "executable": "docker",
-                "args": [
-                    "run",
-                    "--rm",
-                    "-v",
-                    "${env:HOME}/.ssh:/home/user/.ssh",
-                    "-v",
-                    "${workspaceFolder}/..:/workdir",
-                    "--env",
-                    "ZEPHYR_BASE=/workdir/zephyr",
-                    "--env",
-                    "PROJECT_DIR=/workdir/zephyr_project",
-                    "registry.gitlab.com/Jesse-technology/docker-containers/zephyr:latest",
-                    "/bin/bash",
-                    "-c",
-                ],
-            },
+            // "shell": {
+            //     "executable": "docker",
+            //     "args": [
+            //         "run",
+            //         "--rm",
+            //         "-v",
+            //         "${env:HOME}/.ssh:/home/user/.ssh",
+            //         "-v",
+            //         "${workspaceFolder}/..:/workdir",
+            //         "--env",
+            //         "ZEPHYR_BASE=/workdir/zephyr",
+            //         "--env",
+            //         "PROJECT_DIR=/workdir/zephyr_project",
+            //         "registry.gitlab.com/Jesse-technology/docker-containers/zephyr:latest",
+            //         "/bin/bash",
+            //         "-c",
+            //     ],
+            // },
             "cwd": "${workspaceFolder}",
-            "env": {}
+            "env": {
+                "ZEPHYR_BASE": "${workspaceFolder}/../zephyr",
+                "PROJECT_DIR": "${workspaceFolder}"
+            }
         },
     },
     "tasks": [
@@ -240,7 +243,7 @@
                 "flash",
                 "--skip-rebuild",
                 "--build-dir",
-                "${workspaceFolder}/build-docker/"
+                "${workspaceFolder}/build/"
             ],
             "dependsOn": [
                 "West Rebuild"
@@ -328,7 +331,7 @@
                 "nrf9160dk_nrf9160_ns",
                 "esp32",
                 "esp_wrover_kit",
-                "esp_wroom_32",
+                "esp32_devkitc_wroom",
             ]
         },
         {

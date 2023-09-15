@@ -4,7 +4,10 @@
 
 To init:
 
+(Execute from the root of the repository)
+
 ```shell
+cd zephyr_container/zephyr_project && west init -l . && west update 
 source ../zephyr/zephyr-env.sh && python3 -m venv .venv && source .venv/bin/activate && pip3 install -r ../zephyr/scripts/requirements.txt 
 ```
 
