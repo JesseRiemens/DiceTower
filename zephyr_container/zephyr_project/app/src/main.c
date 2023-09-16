@@ -25,8 +25,12 @@ K_THREAD_STACK_DEFINE(lcd_thread_stack_area, STACK_SIZE);
 struct k_thread encoder_thread;
 struct k_thread lcd_thread;
 
-void encoder_entry(void);
-void lcd_entry(void);
+void encoder_entry(void*, void*, void*);
+void lcd_entry(void*, void*, void*);
+
+// GPIO callback
+void gpio_callback(const struct device *dev, struct gpio_callback *cb,
+                   uint32_t pins);
 
 int main(void) {
   printk("Zephyr Example Application %s\n", APP_VERSION_STRING);
@@ -40,14 +44,20 @@ int main(void) {
       k_thread_create(&lcd_thread, lcd_thread_stack_area, STACK_SIZE, lcd_entry,
                       NULL, NULL, NULL, K_PRIO_COOP(7), 0, K_NO_WAIT);
 
-  while (1) {
-    k_msleep(1000);
-    printk("Hello World! (from main thread)\n");
+  // Add callback to GPIO
+  const struct device *gpio_dev = device_get_binding("GPIO_0");
+  if (!gpio_dev) {
+    printk("Cannot find GPIO_0!\n");
+    return -ENODEV;
   }
+
+  static struct gpio_callback gpio_cb;
+  gpio_init_callback(&gpio_cb, gpio_callback, BIT(0));
+  gpio_add_callback(gpio_dev, &gpio_cb);
 }
 
-// Incremental encoder thread
-void encoder_entry(void) {
+// Incremental encoder thread>
+void encoder_entry(void* a, void* b, void* c) {
   while (1) {
     k_msleep(1234);
     printk("Encoder thread\n");
@@ -55,7 +65,7 @@ void encoder_entry(void) {
 }
 
 // LCD thread
-void lcd_entry(void) {
+void lcd_entry(void* a, void* b, void* c) {
   while (1) {
     k_msleep(4321);
     printk("LCD thread\n");
