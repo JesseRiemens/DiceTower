@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    needs: create-gerbers
     runs-on: ubuntu-22.04
     container: ghcr.io/zephyrproject-rtos/ci:v0.26.2 
     env:
@@ -16,20 +17,52 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: example-application
+          path: repo_dir
 
       - name: Initialize
-        working-directory: example-application
+        working-directory: repo_dir
         run: |
           west init -l .
           west update
 
       - name: Build firmware
-        working-directory: example-application
+        working-directory: repo_dir
         run: |
           west twister -T app -v --inline-logs --integration
 
       - name: Twister Tests
-        working-directory: example-application
+        working-directory: repo_dir
         run: |
           west twister -T tests --integration
+
+  create-gerbers:
+    runs-on: ubuntu-22.04
+    container: 
+      image: kicad/kicad:7.0
+      options: --user root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: repo_dir
+
+      - name: Initialize
+        working-directory: repo_dir/KiCadFiles
+        run: |
+          mkdir -p ProductionFiles
+
+      - name: Create Gerbers
+        working-directory: repo_dir/KiCadFiles
+        run: |
+          kicad-cli pcb export gerbers --output "./ProductionFiles" --layers F.Cu,B.Cu,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,F.Mask,B.Mask,Edge.Cuts --no-protel-ext ./DiceTower.kicad_pcb
+
+      - name: Zip Gerbers
+        working-directory: repo_dir/KiCadFiles/ProductionFiles
+        run: |
+          zip -r gerbers.zip ./*
+      
+      - name: Archive Gerbers
+        uses: actions/upload-artifact@v3
+        with:
+          name: gerbers
+          path: repo_dir/KiCadFiles/ProductionFiles/gerbers.zip
