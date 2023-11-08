@@ -35,3 +35,7 @@ fp-info-cache
 *.$*.drawio.png.bkp
 *.$*.drawio.png.dtmp
 *~_autosave-*.kicad_pcb.lck
+
+.DS_Store
+Production Files/
+Production Files.zip
