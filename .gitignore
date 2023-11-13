@@ -37,6 +37,6 @@ fp-info-cache
 *~_autosave-*.kicad_pcb.lck
 
 .DS_Store
-ProductionFiles/
-ProductionFiles.zip
+Production[ ]*Files/
+Production[ ]*Files.zip
 Outputs/
