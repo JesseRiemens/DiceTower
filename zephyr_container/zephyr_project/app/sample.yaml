@@ -7,7 +7,7 @@ sample:
 common:
   build_only: true
   integration_platforms:
-    - esp32
+    - esp32_devkitc_wroom
 tests:
   app.default: {}
   app.debug:
@@ -19,4 +19,4 @@ tests:
     harness_config:
       fixture: fixture_led_ws2812
     integration_platforms:
-      - esp32
+      - esp32_devkitc_wroom
