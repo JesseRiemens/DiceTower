@@ -9,6 +9,7 @@
 # build
 /build*
 /twister-out*
+/twister
 
 __pycache__/
 .gitlab-ci-local/

@@ -28,23 +28,23 @@
         },
     },
     "tasks": [
-        {
-            "label": "Initialize Workspace",
-            "type": "shell",
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "clear": false
-            },
-            "command": "./zephyr_project/.vscode/init_workspace.sh",
-            "args": [
-                "${workspaceFolder}"
-            ],
-        },
+        // {
+        //     "label": "Initialize Workspace",
+        //     "type": "shell",
+        //     "group": "build",
+        //     "presentation": {
+        //         "echo": true,
+        //         "reveal": "always",
+        //         "focus": false,
+        //         "panel": "shared",
+        //         "showReuseMessage": false,
+        //         "clear": false
+        //     },
+        //     "command": ".vscode/init_workspace.sh",
+        //     "args": [
+        //         "${workspaceFolder}/.."
+        //     ],
+        // },
         {
             "label": "Set Default Board",
             "type": "shell",
@@ -171,12 +171,10 @@
             "args": [
                 "twister",
                 "-T",
-                "app/",
+                "tests",
                 "--outdir",
                 "build/twister",
                 "--clobber-output",
-                "--report-dir",
-                "twister/",
                 "-v",
                 "-i"
             ],

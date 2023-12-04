@@ -1,79 +1,39 @@
 /*
- * Copyright (c) 2021 Nordic Semiconductor ASA
+ * Copyright (c) 2023 Jamie McCrae
+ *
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <errno.h>
 #include <string.h>
-
-#include <app_version.h>
-#include <zephyr/device.h>
-#include <zephyr/drivers/gpio.h>
-#include <zephyr/drivers/spi.h>
 #include <zephyr/kernel.h>
-#include <zephyr/sys/util.h>
-
+#include <zephyr/device.h>
+#include <zephyr/drivers/auxdisplay.h>
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
-#define STACK_SIZE 1024
+LOG_MODULE_REGISTER(auxdisplay_sample, LOG_LEVEL_DBG);
 
-// Thread declarations
-K_THREAD_STACK_DEFINE(encoder_thread_stack_area, STACK_SIZE);
-K_THREAD_STACK_DEFINE(lcd_thread_stack_area, STACK_SIZE);
+int main(void)
+{
+	int rc;
+	const struct device *const dev = DEVICE_DT_GET(DT_NODELABEL(auxdisplay_0));
+	uint8_t data[64];
 
-struct k_thread encoder_thread;
-struct k_thread lcd_thread;
+	if (!device_is_ready(dev)) {
+		LOG_ERR("Auxdisplay device is not ready.");
+		return 0;
+	}
 
-void encoder_entry(void*, void*, void*);
-void lcd_entry(void*, void*, void*);
+	rc = auxdisplay_cursor_set_enabled(dev, true);
 
-// GPIO callback
-void gpio_callback(const struct device *dev, struct gpio_callback *cb,
-                   uint32_t pins);
+	if (rc != 0) {
+		LOG_ERR("Failed to enable cursor: %d", rc);
+	}
 
-int main(void) {
-  printk("Zephyr Example Application %s\n", APP_VERSION_STRING);
+	snprintk(data, sizeof(data), "Hello world from %s", CONFIG_BOARD);
+	rc = auxdisplay_write(dev, data, strlen(data));
 
-  // Create threads
-  k_tid_t encoder_tid = k_thread_create(
-      &encoder_thread, encoder_thread_stack_area, STACK_SIZE, encoder_entry,
-      NULL, NULL, NULL, K_PRIO_COOP(7), 0, K_NO_WAIT);
-
-  k_tid_t lcd_tid =
-      k_thread_create(&lcd_thread, lcd_thread_stack_area, STACK_SIZE, lcd_entry,
-                      NULL, NULL, NULL, K_PRIO_COOP(7), 0, K_NO_WAIT);
-
-  // Add callback to GPIO
-  const struct device *gpio_dev = device_get_binding("GPIO_0");
-  if (!gpio_dev) {
-    printk("Cannot find GPIO_0!\n");
-    return -ENODEV;
-  }
-
-  static struct gpio_callback gpio_cb;
-  gpio_init_callback(&gpio_cb, gpio_callback, BIT(0));
-  gpio_add_callback(gpio_dev, &gpio_cb);
-}
-
-// Incremental encoder thread>
-void encoder_entry(void* a, void* b, void* c) {
-  while (1) {
-    k_msleep(1234);
-    printk("Encoder thread\n");
-  }
-}
-
-// LCD thread
-void lcd_entry(void* a, void* b, void* c) {
-  while (1) {
-    k_msleep(4321);
-    printk("LCD thread\n");
-  }
-}
-
-// GPIO callback
-void gpio_callback(const struct device *dev, struct gpio_callback *cb,
-                   uint32_t pins) {
-  printk("GPIO callback\n");
+	if (rc != 0) {
+		LOG_ERR("Failed to write data: %d", rc);
+	}
+	return 0;
 }

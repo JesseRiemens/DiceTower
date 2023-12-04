@@ -20,3 +20,9 @@ tests:
       fixture: fixture_led_ws2812
     integration_platforms:
       - esp32_devkitc_wroom
+  sample.drivers.auxdisplay:
+    tags: auxdisplay
+    harness_config:
+      fixture: fixture_auxdisplay
+    integration_platforms:
+      - esp32_devkitc_wroom
