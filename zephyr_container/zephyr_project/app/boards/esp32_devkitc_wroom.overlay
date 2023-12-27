@@ -7,20 +7,25 @@
 
 &spi2 {
     cs-gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
-
+    
     auxdisplay_0: auxdisplay@0 {
         reg = <0>;
         compatible = "hit,hd44780";
         status = "okay";
+
         columns = <20>;
         rows = <4>;
         mode = <4>;
         register-select-gpios = <&gpio0 17 (GPIO_ACTIVE_HIGH)>;
         enable-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH)>;
-        data-bus-gpios = <0>, <0>, <0>, <0>,
-				 <&gpio0 14 (GPIO_ACTIVE_HIGH)>,
-				 <&gpio0 32 (GPIO_ACTIVE_HIGH)>,
-				 <&gpio0 15 (GPIO_ACTIVE_HIGH)>,
-				 <&gpio0 27 (GPIO_ACTIVE_HIGH)>;
+        read-write-gpios = <&gpio0 23 (GPIO_ACTIVE_HIGH)>;
+        data-bus-gpios = <0>,
+                         <0>,
+                         <0>,
+                         <0>,
+                         <&gpio0 14 (GPIO_ACTIVE_HIGH)>,
+                         <&gpio1 0 (GPIO_ACTIVE_HIGH)>,
+                         <&gpio1 1 (GPIO_ACTIVE_HIGH)>,
+                         <&gpio0 27 (GPIO_ACTIVE_HIGH)>;
     };
 };
